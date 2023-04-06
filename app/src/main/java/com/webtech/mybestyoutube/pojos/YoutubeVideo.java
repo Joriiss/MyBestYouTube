@@ -1,10 +1,22 @@
 package com.webtech.mybestyoutube.pojos;
 
-public class YoutubeVideo {
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import java.io.Serializable;
+
+@Entity
+public class YoutubeVideo implements java.io.Serializable {
+    @PrimaryKey(autoGenerate = true)
     private Long id;
+    @ColumnInfo(name = "title")
     private String title;
+    @ColumnInfo(name = "description")
     private String description;
+    @ColumnInfo(name = "url")
     private String url;
+    @ColumnInfo(name = "category")
     private String category;
 
     public Long getId() {

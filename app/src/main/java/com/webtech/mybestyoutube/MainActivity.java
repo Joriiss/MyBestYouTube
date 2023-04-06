@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.webtech.mybestyoutube.database.YoutubeVideoDatabase;
 import com.webtech.mybestyoutube.pojos.YoutubeVideo;
@@ -18,6 +19,7 @@ import com.webtech.mybestyoutube.pojos.YoutubeVideoAdapter;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String KEY_ID = "key_id";
     public Context context;
     private RecyclerView rvVideos;
     @Override
@@ -63,8 +65,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<YoutubeVideo> videos) {
-            YoutubeVideoAdapter videoAdapter = new YoutubeVideoAdapter(videos);
-            rvVideos.setAdapter(videoAdapter);
+            rvVideos.setAdapter(new YoutubeVideoAdapter(videos, new YoutubeVideoAdapter.OnItemClickListener() {
+                @Override public void onItemClick(YoutubeVideo youtubeVideo) {
+                    Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                    intent.putExtra(KEY_ID, youtubeVideo.getId());
+                    startActivity(intent);
+                }
+            }));
         }
     }
 
